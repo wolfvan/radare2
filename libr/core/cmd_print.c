@@ -5458,6 +5458,13 @@ static int cmd_print(void *data, const char *input) {
 				r_core_cmdf (core, "pcj %s", input + 2);
 			} else if (input[1] == 'f') { // "p8f"
 				r_core_cmdf (core, "p8 $F @ $B");
+			} else if (input[1] == 's') { // "p8s"
+				p->cb_printf ("\"");
+				for (i = 0; !p->interrupt && i < len; i++) {
+					p->cb_printf ("\\x%02x", buf[i]);
+				}
+				p->cb_printf ("\"\n");
+				break;
 			} else {
 				r_print_bytes (core->print, block, len, "%02x");
 			}
